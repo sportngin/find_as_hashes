@@ -1,17 +1,25 @@
 require "find_as_hashes/version"
 require 'active_record'
+require 'active_support/core_ext'
 
 module FindAsHashes
-  def all_as_hashes
-    # TODO figure out a less hacky way than where(nil) of retrieveing existing relation stack without modifying it
-    relation_stack = where(nil)
-    connection.select_all(relation_stack.joins(relation_stack.includes_values).to_sql)
+
+  module Relation
+    def all_as_hashes
+      connection.select_all(self.joins(self.includes_values).to_sql)
+    end
+
+    def first_as_hash
+      relation_stack = limit(1)
+      connection.select_one(relation_stack.joins(relation_stack.includes_values).to_sql)
+    end
   end
 
-  def first_as_hash
-    relation_stack = limit(1)
-    connection.select_one(relation_stack.joins(relation_stack.includes_values).to_sql)
+  module Base
+    delegate :all_as_hashes, :first_as_hash, :to => :scoped
   end
+
 end
 
-ActiveRecord::Base.extend FindAsHashes
+ActiveRecord::Relation.send :include, FindAsHashes::Relation
+ActiveRecord::Base.extend FindAsHashes::Base
