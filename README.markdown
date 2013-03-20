@@ -1,5 +1,5 @@
-[![TravisCI](http://travis-ci.org/sportngin/find_as_hashes)](http://travis-ci.org/sportngin/find_as_hashes)
-[![Code Climate](https://codeclimate.com/github/sportngin/find_as_hashes)](https://codeclimate.com/github/sportngin/find_as_hashes)
+[![TravisCI](http://travis-ci.org/sportngin/find_as_hashes.png)](http://travis-ci.org/sportngin/find_as_hashes)
+[![Code Climate](https://codeclimate.com/github/sportngin/find_as_hashes.png)](https://codeclimate.com/github/sportngin/find_as_hashes)
 
 # ActiveRecord
 
