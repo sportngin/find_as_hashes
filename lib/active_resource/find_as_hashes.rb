@@ -21,12 +21,16 @@ module ActiveResource
         find_as_hashes(:last, *args)
       end
 
-      def instantiate_collection_with_check(collection, prefix_options = {})
+      def instantiate_collection_with_check(collection, original_params = {}, prefix_options = {})
         if @skip_instantiate
           @skip_instantiate = nil
           collection
         else
-          instantiate_collection_without_check(collection, prefix_options)
+          if ActiveResource::VERSION::MAJOR >= 4
+            instantiate_collection_without_check(collection, original_params, prefix_options)
+          else
+            instantiate_collection_without_check(collection, prefix_options)
+          end
         end
       end
       

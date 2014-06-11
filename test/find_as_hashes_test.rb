@@ -1,12 +1,11 @@
 require File.dirname(__FILE__) + "/test_helper"
 
-class FindAsHashesTest < ActiveRecord::TestCase
+class FindAsHashesTest < ActiveSupport::TestCase
   context "#all_as_hashes" do
     context "on a relation" do
       setup do
-        relation = User.where(:active => true)
-        @records = relation.all
-        @hashes = relation.all_as_hashes
+        @records = User.where(:active => true)
+        @hashes = @records.all_as_hashes
       end
 
       should "return an array of attribute hashes" do

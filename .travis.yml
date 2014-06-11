@@ -1,9 +1,30 @@
 rvm:
-  - 1.8.7
   - 1.9.2
   - 1.9.3
-  - ree
+  - 2.1.2
   - ruby-head
+
+env:
+  - "RAILS_VERSION=3.1"
+  - "RAILS_VERSION=4.0"
+
+gemfile:
+  - gemfiles/rails_3.gemfile
+  - gemfiles/rails_4.gemfile
+
+matrix:
+  exclude:
+    - rvm: 1.9.2
+      env: "RAILS_VERSION=4.0"
+    - rvm: 1.9.2
+      gemfile: gemfiles/rails_4.gemfile
+    - rvm: 2.1.2
+      env: "RAILS_VERSION=3.1"
+    - rvm: 2.1.2
+      gemfile: gemfiles/rails_3.gemfile
+  allow_failures:
+    - rvm: ruby-head
+
 notifications:
   # overriding this so that TST Media's email account doesn't get spammed
   # feel free to add yourselves if you want in on this action
