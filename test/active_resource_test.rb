@@ -42,7 +42,11 @@ class ActiveResourceTest < ActiveSupport::TestCase
     should "return a single hash" do
       assert_equal Hash, @hash.class
       assert_equal Resource::User, @record.class
-      assert_equal @hash["user"]["name"], User.first.name
+      if ActiveResource::VERSION::MAJOR >= 4
+        assert_equal @hash["name"], User.first.name
+      else
+        assert_equal @hash["user"]["name"], User.first.name
+      end
     end
   end
 
@@ -55,7 +59,11 @@ class ActiveResourceTest < ActiveSupport::TestCase
     should "return a single hash" do
       assert_equal Hash, @hash.class
       assert_equal Resource::User, @record.class
-      assert_equal @hash["user"]["name"], User.last.name
+      if ActiveResource::VERSION::MAJOR >= 4
+        assert_equal @hash["name"], User.last.name
+      else
+        assert_equal @hash["user"]["name"], User.last.name
+      end
     end
   end
 end

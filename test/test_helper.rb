@@ -30,7 +30,7 @@ class Role < ActiveRecord::Base
   has_many :user
 end
 
-# Rails 3.0 has Fixtures, Rails 3.1 has ActiveRecord::Fixtures
-fixtures_class = defined?(ActiveRecord::Fixtures) ? ActiveRecord::Fixtures : Fixtures
+# Rails 3 has Fixtures, Rails 4 has ActiveRecord::FixtureSet
+fixtures_class = defined?(ActiveRecord::FixtureSet) ? ActiveRecord::FixtureSet : ActiveRecord::Fixtures
 fixtures_class.create_fixtures "test/fixtures", :roles
 fixtures_class.create_fixtures "test/fixtures", :users
