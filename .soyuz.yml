@@ -1,0 +1,13 @@
+defaults:
+  deploy_cmd: gem push *.gem
+  before_deploy_cmds:
+    - op tag-release
+    - sed -i '' -e "s/\".*/\"$(git tag | tail -1 | sed s/v//)\"/" lib/find_as_hashes/version.rb
+    - git add  lib/find_as_hashes/version.rb
+    - git commit -m "Version Bump" && git push
+    - gem build find_as_hashes.gemspec
+  after_deploy_cmds:
+    - rm *.gem
+environments:
+  -
+    rubygems: {}
