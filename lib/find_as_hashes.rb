@@ -6,13 +6,26 @@ module FindAsHashes
 
   module Relation
     def all_as_hashes
-      connection.select_all(self.joins(self.includes_values).to_sql).to_a
+      fix_prepared_statement do
+        connection.select_all(self.joins(self.includes_values).to_sql).to_a
+      end
     end
 
     def first_as_hash
-      relation_stack = limit(1)
-      connection.select_one(relation_stack.joins(relation_stack.includes_values).to_sql)
+      fix_prepared_statement do
+        relation_stack = limit(1)
+        connection.select_one(relation_stack.joins(relation_stack.includes_values).to_sql)
+      end
     end
+
+    def fix_prepared_statement
+      if connection.respond_to?(:unprepared_statement)
+        connection.unprepared_statement{ yield }
+      else
+        yield
+      end
+    end
+    private :fix_prepared_statement
   end
 
   module Base
