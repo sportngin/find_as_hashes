@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "activerecord"
 
+  s.add_development_dependency "test-unit"
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
   s.add_development_dependency "turn"
